@@ -1,3 +1,16 @@
+# Doc 
+
+/Doc_inutile
+/Doc_code_recupération
+
+# Image 
+
+/Image/schema_esp32_nema_driver_A4988.png
+/Image/schema_arduino_nema_driver.png
+/Image/driver.png
+/Image/2.png
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
