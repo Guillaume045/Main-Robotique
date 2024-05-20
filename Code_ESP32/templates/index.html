@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Main Robotique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        /* Style de la barre en haut */
+        header {
+            background-color: #3f4040;
+            color: #fff1b9;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+        }
+
+        /* Style du conteneur de boutons */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .button-container button {
+            width: 120px;
+            height: 50px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #3f4040;
+            color: #fff1b9;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #727C83;
+        }
+
+        /* Media queries pour les différentes tailles d'écran */
+        @media (max-width: 1000px) {
+            .button-container button {
+                flex: 1 1 30%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .button-container button {
+                flex: 1 1 45%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .button-container button {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Main Robotique</h1>
+    </header>
+    <main>
+        <div class="button-container">
+            <button id="btn1">L'auriculaire</button>
+            <button id="btn2">L'Annulaire</button>
+            <button id="btn3">Le Majeur</button>
+            <button id="btn4">L'Index</button>
+            <button id="btn5">Le Pouce</button>
+        </div>
+    </main>
+    <script>
+        // Ajouter un écouteur d'événements à chaque bouton
+        document.getElementById('btn1').addEventListener('click', function() {
+            toggleServo('/servo1/on', '/servo1/off');
+        });
+        document.getElementById('btn2').addEventListener('click', function() {
+            toggleServo('/servo2/on', '/servo2/off');
+        });
+        document.getElementById('btn3').addEventListener('click', function() {
+            toggleServo('/servo3/on', '/servo3/off');
+        });
+        document.getElementById('btn4').addEventListener('click', function() {
+            toggleServo('/servo4/on', '/servo4/off');
+        });
+        document.getElementById('btn5').addEventListener('click', function() {
+            toggleServo('/servo5/on', '/servo5/off');
+        });
+
+        // Fonction pour envoyer les requêtes HTTP correspondantes pour contrôler le servomoteur
+        function toggleServo(onUrl, offUrl) {
+            const currentColor = window.getComputedStyle(event.target).backgroundColor;
+            const servoUrl = currentColor === 'rgb(114, 124, 131)' ? onUrl : offUrl;
+            fetch(servoUrl)
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .then(data => console.log(data)) // Afficher la réponse de la requête (optionnel)
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
